@@ -4,15 +4,17 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:getx_starter_kit/getx_starter_kit.dart';
 
+import '../../app/services/chat_notifier.dart';
 import '../../data/models/chat_user.dart';
 import '../../data/models/message.dart';
 import '../../data/repositories/chat_repository.dart';
 import 'chat_item.dart';
 
 class ChatRoomController extends BaseController {
-  ChatRoomController(this._repository, this.roomId);
+  ChatRoomController(this._repository, this._notifier, this.roomId);
 
   final ChatRepository _repository;
+  final ChatNotifier _notifier;
   final String roomId;
 
   late final ChatUser partner;
@@ -34,6 +36,7 @@ class ChatRoomController extends BaseController {
   void onInit() {
     super.onInit();
     partner = _repository.findRoom(roomId)!.partner;
+    _notifier.enterRoom(roomId); // 이 방을 보는 동안은 알림을 띄우지 않는다
 
     input.addListener(() => canSend.value = input.text.trim().isNotEmpty);
 
@@ -69,6 +72,7 @@ class ChatRoomController extends BaseController {
 
   @override
   void onClose() {
+    _notifier.leaveRoom(roomId);
     for (final s in _subs) {
       s.cancel();
     }

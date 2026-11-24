@@ -18,7 +18,7 @@ abstract class AppPages {
     basePage(name: Routes.home, page: () => const HomeView(), binding: HomeBinding()),
     basePage(
       name: Routes.chatRoom,
-      page: () => const ChatRoomView(),
+      page: () => ChatRoomView(roomId: Get.arguments as String),
       binding: ChatRoomBinding(),
       transition: Transition.rightToLeft,
     ),

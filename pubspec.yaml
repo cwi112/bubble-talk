@@ -21,6 +21,7 @@ dependencies:
     git:
       url: https://github.com/jjwwii/getx-starter-kit.git
       ref: master
+  flutter_local_notifications: ^23.0.4
 
 dev_dependencies:
   flutter_test:

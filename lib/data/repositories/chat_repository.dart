@@ -27,6 +27,9 @@ abstract class ChatRepository {
   /// 상대방이 입력 중인지
   Stream<bool> watchTyping(String roomId);
 
+  /// 상대방이 보낸 새 메시지가 도착할 때마다 하나씩 흘러온다. (알림용)
+  Stream<Message> watchIncoming();
+
   /// 채팅방 정보
   ChatRoom? findRoom(String roomId);
 

@@ -42,6 +42,7 @@ class MockChatRepository implements ChatRepository {
   final Map<String, List<Message>> _messages = {}; // roomId → 메시지(오래된 순)
   final Set<String> _typing = {};
   final _changes = StreamController<void>.broadcast();
+  final _incoming = StreamController<Message>.broadcast();
   final List<Timer> _timers = [];
   int _seq = 0;
 
@@ -75,6 +76,9 @@ class MockChatRepository implements ChatRepository {
     yield _typing.contains(roomId);
     yield* _changes.stream.map((_) => _typing.contains(roomId)).distinct();
   }
+
+  @override
+  Stream<Message> watchIncoming() => _incoming.stream;
 
   @override
   ChatRoom? findRoom(String roomId) {
@@ -140,6 +144,7 @@ class MockChatRepository implements ChatRepository {
       t.cancel();
     }
     _changes.close();
+    _incoming.close();
   }
 
   // ---------------------------------------------------------------------------
@@ -173,14 +178,17 @@ class MockChatRepository implements ChatRepository {
   }
 
   void _add(String roomId, String senderId, String text) {
-    _messages[roomId]!.add(Message(
+    final message = Message(
       id: 'm${_seq++}',
       roomId: roomId,
       senderId: senderId,
       text: text,
       sentAt: _now(),
-    ));
+    );
+    _messages[roomId]!.add(message);
     _notify();
+
+    if (senderId != me.id && !_incoming.isClosed) _incoming.add(message);
   }
 
   void _setMyMessagesRead(String roomId) {

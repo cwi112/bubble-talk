@@ -11,7 +11,13 @@ import 'widgets/message_bubble.dart';
 import 'widgets/typing_bubble.dart';
 
 class ChatRoomView extends BaseView<ChatRoomController> {
-  const ChatRoomView({super.key});
+  const ChatRoomView({super.key, required this.roomId});
+
+  final String roomId;
+
+  /// Binding 에서 roomId 를 tag 로 등록했으므로 같은 tag 로 Controller 를 찾는다.
+  @override
+  String? get tag => roomId;
 
   @override
   Color? pageColor(BuildContext context) => AppColors.chatBackground;
