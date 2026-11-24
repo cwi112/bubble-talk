@@ -11,9 +11,9 @@
 
 | 화면 | 기능 |
 | --- | --- |
-| 친구 | 내 프로필, 친구 목록, 프로필 시트에서 1:1 채팅 시작 |
+| 친구 | 내 프로필 카드, 친구 목록, 프로필 시트(색 배너 · 큰 아바타 · 상태 메시지)에서 1:1 채팅 시작 |
 | 채팅 목록 | 최근 대화 순 정렬, 마지막 메시지 미리보기, 시간 표시(오늘·어제·날짜), 안 읽은 수 배지, 하단 탭 전체 배지 |
-| 채팅방 | 메시지 전송, 상대 자동 답장, 입력 중 표시, 읽음 표시, 날짜 구분선, 같은 분 연속 메시지 묶음, 새 메시지 자동 스크롤 |
+| 채팅방 | 메시지 전송, 상대 자동 답장, 입력 중 표시, 읽음 표시(✓ → ✓✓), 날짜 구분선, 5분 안에 이어 보낸 메시지 묶음, 새 메시지 자동 스크롤 |
 | 알림 | 보고 있지 않은 채팅방에 답장이 오거나 앱이 백그라운드일 때 로컬 알림, 알림을 누르면 그 채팅방으로 이동, 같은 방 알림은 최신 하나로 갱신 |
 
 상대방 답장은 `MockReplyBot`이 만듭니다. "안녕", "밥", "고마워" 같은 키워드에 맞춰 답하고, 키워드가 없으면 친구마다 다른 말투로 답합니다.
@@ -21,6 +21,8 @@
 ```
 메시지 전송 ─▶ 0.8초 뒤 읽음 표시 + "입력 중…" ─▶ 1.5초 뒤 답장 도착
 ```
+
+디자인은 앱 이름에 맞춰 하늘색 계열로 통일했습니다. 색은 `lib/app/theme/app_theme.dart`의 `AppColors` 한곳에서 관리하고, 앱 아이콘도 같은 색을 씁니다.
 
 ## 아키텍처
 
@@ -41,7 +43,7 @@ View (BaseView) ──Obx──▶ Controller (BaseController) ──▶ ChatRep
 
 ```
 lib/
-├── main.dart                     # 앱 시작, AppBinding(Repository 주입)
+├── main.dart                     # 앱 시작, AppBinding(Repository · 알림 주입)
 ├── app/
 │   ├── routes/                   # Routes, AppPages
 │   ├── theme/                    # 색상, ThemeData
@@ -56,7 +58,9 @@ lib/
     ├── home/                     # 하단 탭(친구 / 채팅)
     ├── friends/                  # 친구 탭 + 프로필 시트
     ├── chat_list/                # 채팅 목록 탭
-    └── chat_room/                # 채팅방, ChatItemBuilder, 말풍선·입력 중 위젯
+    └── chat_room/                # 채팅방, ChatItemBuilder, 말풍선 · 입력 중 · 입력창 위젯
+
+tool/                             # 개발 도구 (앱 아이콘 생성, 화면 스크린샷)
 ```
 
 ## 테스트
@@ -68,7 +72,7 @@ fvm flutter test   # 16개
 | 대상 | 검증 내용 |
 | --- | --- |
 | `ChatTime` | 오전/오후 표기, 오늘·어제·올해·이전 해 구분, 요일 |
-| `ChatItemBuilder` | 날짜 구분선, 같은 분 연속 메시지 묶음 |
+| `ChatItemBuilder` | 날짜 구분선, 같은 사람이 이어 보낸 메시지 묶음(프로필 · 시간 표시 위치) |
 | `MockReplyBot` | 키워드 답장, 친구별 기본 답장 |
 | `MockChatRepository` | 정렬·안 읽은 수, 읽음 처리, 전송 → 읽음 → 입력 중 → 답장 순서, 빈 메시지 무시, 방 중복 생성 방지 |
 | 화면 흐름 | 친구 → 1:1 채팅 → 전송 → 읽음·입력 중 → 답장 / 채팅 목록 배지가 방에 들어가면 사라짐 |
@@ -94,11 +98,18 @@ fvm flutter run
 ```bash
 fvm flutter test tool/generate_app_icon_test.dart   # assets/icon/*.png 생성
 fvm dart run flutter_launcher_icons                 # Android(적응형 포함) · iOS 아이콘 적용
-fvm flutter test tool/screenshots_test.dart         # (선택) 주요 화면 스크린샷 → build/screenshots/
 ```
 
-- 알림 표시줄 아이콘은 Android 규칙에 맞춰 흰색 실루엣 벡터(`res/drawable/ic_notification.xml`)를 따로 둡니다.
+- 알림 표시줄 아이콘은 Android 규칙에 맞춰 같은 말풍선 모양의 흰색 실루엣 벡터(`res/drawable/ic_notification.xml`)를 따로 둡니다.
 - `flutter_launcher_icons` 0.14.4는 iOS 프로젝트 파일의 엉뚱한 설정(`ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS`)을 바꿉니다. 아이콘을 다시 만든 뒤 `git checkout -- ios/Runner.xcodeproj/project.pbxproj`로 되돌려 주세요.
+
+## 화면 스크린샷 (디자인 확인용)
+
+```bash
+fvm flutter test tool/screenshots_test.dart   # 친구 · 프로필 · 채팅 목록 · 채팅방 → build/screenshots/
+```
+
+테스트 렌더러에 맑은 고딕과 Material 아이콘 폰트를 불러와 주요 화면을 PNG로 저장합니다. 에뮬레이터 없이 디자인 변경을 빠르게 확인할 때 씁니다. (Windows 전용, 이모지와 앱바 제목은 실제 기기와 다르게 보일 수 있음)
 
 ## 다음 단계
 
