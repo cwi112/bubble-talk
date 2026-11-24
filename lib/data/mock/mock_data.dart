@@ -10,7 +10,7 @@ abstract final class MockData {
     id: 'me',
     name: '나',
     statusMessage: 'Flutter 공부 중',
-    color: Color(0xFF5B6CFF),
+    color: Color(0xFF2E9BF0),
   );
 
   static const friends = [

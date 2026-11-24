@@ -171,7 +171,7 @@ class _InputBar extends StatelessWidget {
                 onPressed: controller.canSend.value ? controller.send : null,
                 style: IconButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  disabledBackgroundColor: AppColors.border,
+                  disabledBackgroundColor: AppColors.primaryLight,
                   fixedSize: const Size(44, 44),
                 ),
                 icon: const Icon(Icons.arrow_upward_rounded, color: Colors.white),

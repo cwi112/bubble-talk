@@ -6,7 +6,7 @@ class ChatUser {
     required this.id,
     required this.name,
     this.statusMessage = '',
-    this.color = const Color(0xFF5B6CFF),
+    this.color = const Color(0xFF2E9BF0),
   });
 
   final String id;

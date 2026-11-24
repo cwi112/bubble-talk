@@ -88,11 +88,12 @@ fvm flutter run
 
 <img src="assets/icon/icon.png" width="96" alt="버블톡 아이콘">
 
-겹친 말풍선과 "입력 중" 점 세 개로 버블톡을 표현했습니다. 이미지 파일 대신 코드(`tool/generate_app_icon_test.dart`)로 그려서, 색을 바꾸면 바로 다시 만들 수 있습니다.
+하늘색 배경 위에 비눗방울처럼 반투명하고 테두리가 빛나는 말풍선, 그 안의 "입력 중" 점 세 개, 위로 떠오르는 작은 방울로 "버블 + 채팅"을 표현했습니다. 이미지 파일 대신 코드(`tool/generate_app_icon_test.dart`)로 그려서, 색을 바꾸면 바로 다시 만들 수 있습니다.
 
 ```bash
 fvm flutter test tool/generate_app_icon_test.dart   # assets/icon/*.png 생성
 fvm dart run flutter_launcher_icons                 # Android(적응형 포함) · iOS 아이콘 적용
+fvm flutter test tool/screenshots_test.dart         # (선택) 주요 화면 스크린샷 → build/screenshots/
 ```
 
 - 알림 표시줄 아이콘은 Android 규칙에 맞춰 흰색 실루엣 벡터(`res/drawable/ic_notification.xml`)를 따로 둡니다.

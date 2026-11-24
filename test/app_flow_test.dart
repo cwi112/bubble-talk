@@ -160,7 +160,7 @@ void main() {
       // 뒤로 가면 채팅방이 아니라 홈
       Get.back();
       await tester.pumpAndSettle();
-      expect(find.text('친구 5'), findsOneWidget);
+      expect(find.text('Flutter 공부 중'), findsOneWidget); // 친구 탭의 내 프로필
     });
   });
 }

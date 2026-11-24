@@ -18,7 +18,7 @@ class LocalNotificationService implements NotificationService {
     category: AndroidNotificationCategory.message,
     // 알림 표시줄용 흰색 실루엣 아이콘 (res/drawable/ic_notification.xml) + 앱 메인 색
     icon: 'ic_notification',
-    color: Color(0xFF5B6CFF),
+    color: Color(0xFF2E9BF0),
   );
 
   @override
