@@ -7,6 +7,7 @@ import '../../app/utils/chat_time.dart';
 import '../../app/widgets/user_avatar.dart';
 import 'chat_item.dart';
 import 'chat_room_controller.dart';
+import 'widgets/chat_input_bar.dart';
 import 'widgets/message_bubble.dart';
 import 'widgets/typing_bubble.dart';
 
@@ -81,7 +82,14 @@ class ChatRoomView extends BaseView<ChatRoomController> {
             );
           }),
         ),
-        _InputBar(controller: controller),
+        // 입력창은 Controller 를 모르는 위젯. 필요한 값만 넘기고, canSend 가 바뀌면 Obx 가 다시 그린다.
+        Obx(
+          () => ChatInputBar(
+            input: controller.input,
+            canSend: controller.canSend.value,
+            onSend: controller.send,
+          ),
+        ),
       ],
     );
   }
@@ -122,62 +130,6 @@ class _EmptyRoom extends StatelessWidget {
           Icon(Icons.waving_hand_rounded, size: 44, color: AppColors.primary.withValues(alpha: 0.6)),
           const SizedBox(height: 12),
           Text('$name님과의 첫 대화를 시작해 보세요', style: const TextStyle(color: AppColors.textWeak)),
-        ],
-      ),
-    );
-  }
-}
-
-class _InputBar extends StatelessWidget {
-  const _InputBar({required this.controller});
-
-  final ChatRoomController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: AppColors.border)),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Expanded(
-            child: TextField(
-              controller: controller.input,
-              minLines: 1,
-              maxLines: 4,
-              textInputAction: TextInputAction.send,
-              onSubmitted: (_) => controller.send(),
-              decoration: InputDecoration(
-                hintText: '메시지 입력',
-                filled: true,
-                fillColor: AppColors.chatBackground,
-                isDense: true,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(22), borderSide: BorderSide.none),
-              ),
-            ),
-          ),
-          const SizedBox(width: 6),
-          Obx(
-            () => AnimatedScale(
-              scale: controller.canSend.value ? 1 : 0.85,
-              duration: const Duration(milliseconds: 150),
-              child: IconButton.filled(
-                tooltip: '보내기',
-                onPressed: controller.canSend.value ? controller.send : null,
-                style: IconButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  disabledBackgroundColor: AppColors.primaryLight,
-                  fixedSize: const Size(44, 44),
-                ),
-                icon: const Icon(Icons.arrow_upward_rounded, color: Colors.white),
-              ),
-            ),
-          ),
         ],
       ),
     );

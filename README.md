@@ -35,6 +35,7 @@ View (BaseView) ──Obx──▶ Controller (BaseController) ──▶ ChatRep
 - **Repository 인터페이스**: 화면은 `ChatRepository`만 알고, 실제 구현은 `AppBinding`에서 주입합니다. Firebase로 바꿀 때는 구현 클래스를 새로 만들고 그 한 줄만 바꾸면 됩니다.
 - **알림도 인터페이스로 분리**: `NotificationService` 뒤에 `flutter_local_notifications` 구현을 두었습니다. 앱 전역 서비스 `ChatNotifier`가 "지금 보고 있는 채팅방"과 앱 상태(포그라운드/백그라운드)를 보고 알림을 띄울지 결정합니다. 나중에 FCM을 붙여도 화면 코드는 그대로입니다.
 - **Stream 기반 실시간 갱신**: 채팅방 목록, 메시지, 입력 중 상태를 `Stream`으로 제공합니다. Firestore의 `snapshots()`와 같은 형태라 교체가 쉽습니다.
+- **View는 자기 Controller에만 의존**: 다른 화면 Controller를 `Get.find()`로 빌려 쓰지 않습니다(예: 하단 탭 배지는 `HomeController`가 Repository를 구독해 계산). 입력창 같은 하위 위젯은 Controller 대신 필요한 값과 콜백만 받아 재사용할 수 있게 했습니다.
 - **화면용 데이터 미리 계산**: `ChatItemBuilder`가 메시지 목록을 날짜 구분선과 말풍선 묶음(프로필·시간 표시 여부)으로 바꿉니다. 위젯은 그리기만 합니다.
 - **테스트하기 쉬운 목업**: 현재 시각, 지연 시간, 난수를 주입받아서 테스트에서 시간과 답장을 제어합니다.
 

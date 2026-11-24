@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:getx_starter_kit/getx_starter_kit.dart';
 
 import '../../app/widgets/unread_badge.dart';
-import '../chat_list/chat_list_controller.dart';
 import '../chat_list/chat_list_tab.dart';
 import '../friends/friends_tab.dart';
 import 'home_controller.dart';
@@ -11,8 +10,6 @@ import 'home_controller.dart';
 /// 하단 탭(친구 / 채팅)을 가진 첫 화면
 class HomeView extends BaseView<HomeController> {
   const HomeView({super.key});
-
-  ChatListController get _chats => Get.find();
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) => AppBar(
@@ -43,7 +40,7 @@ class HomeView extends BaseView<HomeController> {
         clipBehavior: Clip.none,
         children: [
           icon,
-          Positioned(right: -10, top: -6, child: UnreadBadge(count: _chats.totalUnread)),
+          Positioned(right: -10, top: -6, child: UnreadBadge(count: controller.totalUnread.value)),
         ],
       );
 

@@ -9,7 +9,7 @@ import 'home_controller.dart';
 class HomeBinding extends BaseBinding {
   @override
   void dependencies() {
-    lazy(() => HomeController());
+    lazy(() => HomeController(Get.find()));
     lazy(() => FriendsController(Get.find()));
     lazy(() => ChatListController(Get.find()));
   }

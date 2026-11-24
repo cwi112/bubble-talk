@@ -16,8 +16,6 @@ class ChatListController extends BaseController {
   final rooms = <ChatRoom>[].obs;
   StreamSubscription<List<ChatRoom>>? _sub;
 
-  /// 하단 탭 배지에 쓰는 전체 안 읽은 수
-  int get totalUnread => rooms.fold(0, (sum, r) => sum + r.unreadCount);
 
   @override
   void onInit() {
