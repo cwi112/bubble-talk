@@ -26,7 +26,7 @@
 
 ## 아키텍처
 
-[getx_starter_kit](https://github.com/jjwwii/getx-starter-kit)의 `BaseView` / `BaseController` / `BaseBinding` / `PageState` 구조를 사용합니다.
+[getx_starter_kit](https://github.com/cwi112/getx-starter-kit)의 `BaseView` / `BaseController` / `BaseBinding` / `PageState` 구조를 사용합니다.
 
 ```
 View (BaseView) ──Obx──▶ Controller (BaseController) ──▶ ChatRepository (추상)

@@ -139,8 +139,8 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: e355e0790cf962e0fc8ac9d3daff25368daa9c3a
-      url: "https://github.com/jjwwii/flutter-api-kit.git"
+      resolved-ref: c663592fef2383ee63713ab35e59fca59152e465
+      url: "https://github.com/cwi112/flutter-api-kit.git"
     source: git
     version: "1.0.0"
   flutter_launcher_icons:
@@ -217,8 +217,8 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "6a96896b861d8df735d4eb0ce379302c71f86d8c"
-      url: "https://github.com/jjwwii/getx-starter-kit.git"
+      resolved-ref: a70cbc09c52b894185434ac19fd6fc7a66aa6a0d
+      url: "https://github.com/cwi112/getx-starter-kit.git"
     source: git
     version: "2.0.0"
   http:

@@ -19,7 +19,7 @@ dependencies:
   # BaseView / BaseController / BaseBinding / PageState
   getx_starter_kit:
     git:
-      url: https://github.com/jjwwii/getx-starter-kit.git
+      url: https://github.com/cwi112/getx-starter-kit.git
       ref: master
   flutter_local_notifications: ^23.0.4
 
