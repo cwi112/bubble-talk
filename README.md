@@ -84,6 +84,20 @@ fvm flutter run
 - Android 빌드 기준: Gradle 9.5, AGP 9.3, Kotlin 2.4, Java 17, compileSdk 37 (flutter_local_notifications 요구), core library desugaring 사용
 - 알림 확인 방법: 채팅방에서 메시지를 보내고 바로 뒤로 가거나 홈 버튼을 누르면 1~2초 뒤 알림이 옵니다. 처음 실행할 때 알림 권한을 허용해 주세요.
 
+## 앱 아이콘
+
+<img src="assets/icon/icon.png" width="96" alt="버블톡 아이콘">
+
+겹친 말풍선과 "입력 중" 점 세 개로 버블톡을 표현했습니다. 이미지 파일 대신 코드(`tool/generate_app_icon_test.dart`)로 그려서, 색을 바꾸면 바로 다시 만들 수 있습니다.
+
+```bash
+fvm flutter test tool/generate_app_icon_test.dart   # assets/icon/*.png 생성
+fvm dart run flutter_launcher_icons                 # Android(적응형 포함) · iOS 아이콘 적용
+```
+
+- 알림 표시줄 아이콘은 Android 규칙에 맞춰 흰색 실루엣 벡터(`res/drawable/ic_notification.xml`)를 따로 둡니다.
+- `flutter_launcher_icons` 0.14.4는 iOS 프로젝트 파일의 엉뚱한 설정(`ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS`)을 바꿉니다. 아이콘을 다시 만든 뒤 `git checkout -- ios/Runner.xcodeproj/project.pbxproj`로 되돌려 주세요.
+
 ## 다음 단계
 
 - [ ] Firebase Auth 로그인 · 회원가입

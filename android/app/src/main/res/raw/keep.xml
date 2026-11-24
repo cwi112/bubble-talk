@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 릴리스 빌드에서 리소스 축소 시 알림 아이콘이 지워지지 않도록 보존 (코드에서 이름으로만 참조하기 때문) -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_notification" />

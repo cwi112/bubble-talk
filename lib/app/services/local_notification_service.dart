@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'notification_service.dart';
@@ -15,13 +16,16 @@ class LocalNotificationService implements NotificationService {
     importance: Importance.high,
     priority: Priority.high,
     category: AndroidNotificationCategory.message,
+    // 알림 표시줄용 흰색 실루엣 아이콘 (res/drawable/ic_notification.xml) + 앱 메인 색
+    icon: 'ic_notification',
+    color: Color(0xFF5B6CFF),
   );
 
   @override
   Future<void> init({required void Function(String payload) onTap}) async {
     await _plugin.initialize(
       settings: const InitializationSettings(
-        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+        android: AndroidInitializationSettings('ic_notification'),
         // 권한은 requestPermission() 에서 따로 요청한다.
         iOS: DarwinInitializationSettings(
           requestAlertPermission: false,
